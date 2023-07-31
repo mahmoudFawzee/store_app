@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:store_app/app_data/product_info.dart';
-import 'package:store_app/screens/product_details.dart';
-import 'package:store_app/screens/products_screen.dart';
-import 'package:store_app/widgets/the_cart_product.dart';
+import 'package:store_app/data/product_info.dart';
+import 'package:store_app/view/screens/products/product_details.dart';
+import 'package:store_app/view/screens/home/products_screen.dart';
+import 'package:store_app/view/widgets/the_cart_product.dart';
 
 class Cart extends StatefulWidget {
   const Cart({Key? key}) : super(key: key);
@@ -26,10 +26,10 @@ class _CartState extends State<Cart> {
               Navigator.of(context).pop();
             },
           ),
-          title: Expanded(
+          title:const Expanded(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
-              children: const [
+              children:  [
                 Expanded(
                   child: ListTile(
                     leading: Icon(Icons.shopping_cart),

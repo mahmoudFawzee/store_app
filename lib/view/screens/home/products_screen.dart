@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:store_app/app_data/product_info.dart';
-import 'package:store_app/app_data/products_list.dart';
-import 'package:store_app/screens/cart_content.dart';
-import 'package:store_app/screens/product_details.dart';
-import 'package:store_app/widgets/product.dart';
+import 'package:store_app/data/product_info.dart';
+import 'package:store_app/data/products_list.dart';
+import 'package:store_app/view/screens/cart/cart_content.dart';
+import 'package:store_app/view/screens/products/product_details.dart';
+import 'package:store_app/view/widgets/product.dart';
 
 class ProductsScreen extends StatefulWidget {
   const ProductsScreen({Key? key}) : super(key: key);

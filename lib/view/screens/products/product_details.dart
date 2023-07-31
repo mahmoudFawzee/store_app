@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:store_app/app_data/product_info.dart';
-import 'package:store_app/app_data/products_list.dart';
-import 'package:store_app/screens/cart_content.dart';
-import 'package:store_app/screens/products_screen.dart';
+
+import 'package:store_app/view/screens/cart/cart_content.dart';
+import 'package:store_app/view/screens/home/products_screen.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 
 class ProductDetails extends StatefulWidget {

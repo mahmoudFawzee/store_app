@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:store_app/screens/cart_content.dart';
-import 'package:store_app/screens/product_details.dart';
-import 'package:store_app/screens/splash_screen.dart';
+import 'package:store_app/view/screens/cart/cart_content.dart';
+import 'package:store_app/view/screens/products/product_details.dart';
+import 'package:store_app/view/screens/start/splash_screen.dart';
 
 void main() {
   runApp(const MyApp());
