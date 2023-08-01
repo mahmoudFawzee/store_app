@@ -32,7 +32,7 @@ class ProductsScreen extends StatelessWidget {
                 color: Colors.black,
                 iconSize: 35,
               ),
-              //it will be like this if cart products list length == 0 reurn null
+              //it will be like this if cart products list length == 0 return null
               // else return this container
               Positioned(
                 top: 0,

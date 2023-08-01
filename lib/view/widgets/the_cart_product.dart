@@ -30,7 +30,7 @@ class _MyCartProductState extends State<MyCartProduct> {
       child: Padding(
         padding: EdgeInsets.symmetric(
           //getting ratio of padding based on screen size
-          //from top and buttom we get screen height which is close to 680
+          //from top and bottom we get screen height which is close to 680
           //so we get it using (8*100)/680 = 1.1 %
           vertical: screenHeight * .011,
           //getting ratio of padding based on screen size
@@ -93,7 +93,7 @@ class _MyCartProductState extends State<MyCartProduct> {
       onPressed: function,
       child: Text(
         action,
-        style: Theme.of(context).textTheme.headline3,
+        style: Theme.of(context).textTheme.labelMedium,
       ),
     );
   }
@@ -128,7 +128,7 @@ class _MyCartProductState extends State<MyCartProduct> {
       child: Center(
         child: Text(
           name ,
-          style: Theme.of(context).textTheme.headline4,
+          style: Theme.of(context).textTheme.labelMedium,
         ),
       ),
     );
@@ -144,7 +144,7 @@ class _MyCartProductState extends State<MyCartProduct> {
       child: Center(
         child: Text(
           '$price\$' ,
-          style: Theme.of(context).textTheme.headline4,
+          style: Theme.of(context).textTheme.labelMedium,
         ),
       ),
     );

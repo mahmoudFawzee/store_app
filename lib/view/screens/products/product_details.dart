@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class ProductDetailsScreen extends StatelessWidget {
   const ProductDetailsScreen({Key? key}) : super(key: key);
   static String pageRoute = 'product_details_page';
-  static int _numberOfOrders = 0;
+  static const int _numberOfOrders = 0;
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
@@ -167,7 +167,7 @@ class ProductDetailsScreen extends StatelessWidget {
                 size: 20,
               ),
             ),
-            Text('$_numberOfOrders'),
+            const Text('$_numberOfOrders'),
             IconButton(
               onPressed: () {},
               icon: const Icon(
