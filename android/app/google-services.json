@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "635633140714",
+    "project_id": "store-app-d3b10",
+    "storage_bucket": "store-app-d3b10.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:635633140714:android:b607521c667a0edb596893",
+        "android_client_info": {
+          "package_name": "com.example.store_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "635633140714-h37kq11q12a6jas905qlv9arhn1fjjms.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAFHrZ9jYnXmLAq7tpXRiIEoKLhBjAN8Z0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "635633140714-3qjr3l07va01prnn8bpi3o07p686jrp0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:635633140714:android:4be3b0aaaed2f7d3596893",
+        "android_client_info": {
+          "package_name": "com.mamado.store_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "635633140714-h37kq11q12a6jas905qlv9arhn1fjjms.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAFHrZ9jYnXmLAq7tpXRiIEoKLhBjAN8Z0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "635633140714-3qjr3l07va01prnn8bpi3o07p686jrp0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

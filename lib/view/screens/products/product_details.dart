@@ -1,24 +1,11 @@
 import 'package:flutter/material.dart';
 
-import 'package:store_app/view/screens/cart/cart_content.dart';
-import 'package:store_app/view/screens/home/products_screen.dart';
-import 'package:flutter_styled_toast/flutter_styled_toast.dart';
-
-class ProductDetails extends StatefulWidget {
-  const ProductDetails({Key? key}) : super(key: key);
-  static String pageRoute = '/product details';
-  static ValueNotifier<Set<ProductInfo>> cartContent = ValueNotifier({});
-  @override
-  State<ProductDetails> createState() => _ProductDetailsState();
-}
-
-class _ProductDetailsState extends State<ProductDetails> {
-  int numberOfOrders = 0;
+class ProductDetailsScreen extends StatelessWidget {
+  const ProductDetailsScreen({Key? key}) : super(key: key);
+  static String pageRoute = 'product_details_page';
+  static int _numberOfOrders = 0;
   @override
   Widget build(BuildContext context) {
-    Map<String, Object> routArges =
-        ModalRoute.of(context)!.settings.arguments as Map<String, Object>;
-    int productId = routArges['id'] as int;
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
 
@@ -35,7 +22,7 @@ class _ProductDetailsState extends State<ProductDetails> {
           ),
         ),
         title: Text(
-          '${routArges['name']}',
+          '',
           style: Theme.of(context).appBarTheme.titleTextStyle,
         ),
         actions: [
@@ -71,7 +58,7 @@ class _ProductDetailsState extends State<ProductDetails> {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(25),
               child: Image.network(
-                routArges['image'] as String,
+                '',
                 height: screenHeight * .40,
                 width: screenWidth * .6,
                 fit: BoxFit.cover,
@@ -97,11 +84,14 @@ class _ProductDetailsState extends State<ProductDetails> {
                   Expanded(
                     child: Row(
                       children: [
-                        productNameWidget(routArges, context),
+                        productNameWidget(
+                          context,
+                          name: '',
+                        ),
                         const SizedBox(
                           width: 20,
                         ),
-                        productRating(productId),
+                        productRating(),
                       ],
                     ),
                   ),
@@ -111,14 +101,11 @@ class _ProductDetailsState extends State<ProductDetails> {
                     endIndent: screenWidth * .1,
                     indent: screenWidth * .1,
                   ),
-                  productHint(productId, context),
+                  productHint(context),
                   customerNumberOfOrders(),
                   Expanded(
                     child: Row(
-                      children: [
-                        productPrice(productId, context),
-                        addToCart(productId)
-                      ],
+                      children: [productPrice(context), addToCart()],
                     ),
                   ),
                 ],
@@ -130,48 +117,10 @@ class _ProductDetailsState extends State<ProductDetails> {
     );
   }
 
-  Expanded addToCart(int index) {
+  Expanded addToCart() {
     return Expanded(
       child: ElevatedButton(
-        onPressed: () {
-          try {
-            ProductDetails.cartContent.value.add(myProducts[index]);
-            setState(() {
-              ProductsScreen.nOfCartElems.value =
-                  ProductDetails.cartContent.value.length;
-            });
-            SnackBar snackBar = SnackBar(
-              backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-              padding: const EdgeInsets.symmetric(
-                vertical: 4,
-              ),
-              content: const Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Text(
-                  'added to cart successfluy',
-                  style: TextStyle(color: Colors.black),
-                ),
-              ),
-              action: SnackBarAction(
-                label: 'go to cart',
-                textColor: Colors.black,
-                onPressed: () {
-                  Navigator.of(context).pushReplacementNamed(Cart.pageRoute);
-                },
-              ),
-            );
-            ScaffoldMessenger.of(context).showSnackBar(snackBar);
-
-            /* showToast(
-              'added to cart successfluy',
-              position: StyledToastPosition.bottom,
-            );*/
-          } catch (e) {
-            showToast(
-              'something went wrong',
-            );
-          }
-        },
+        onPressed: () {},
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all(
             Colors.black,
@@ -188,11 +137,11 @@ class _ProductDetailsState extends State<ProductDetails> {
     );
   }
 
-  Expanded productPrice(int productId, BuildContext context) {
+  Expanded productPrice(BuildContext context) {
     return Expanded(
       child: Text(
-        "\$${getPrice(productId)}",
-        style: Theme.of(context).textTheme.headline4,
+        "\$ price",
+        style: Theme.of(context).textTheme.bodyMedium,
       ),
     );
   }
@@ -212,23 +161,15 @@ class _ProductDetailsState extends State<ProductDetails> {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             IconButton(
-              onPressed: () {
-                setState(() {
-                  numberOfOrders == 0 ? null : numberOfOrders--;
-                });
-              },
+              onPressed: () {},
               icon: const Icon(
                 Icons.remove_circle,
                 size: 20,
               ),
             ),
-            Text('$numberOfOrders'),
+            Text('$_numberOfOrders'),
             IconButton(
-              onPressed: () {
-                setState(() {
-                  numberOfOrders++;
-                });
-              },
+              onPressed: () {},
               icon: const Icon(
                 Icons.add_circle,
                 size: 20,
@@ -240,16 +181,16 @@ class _ProductDetailsState extends State<ProductDetails> {
     );
   }
 
-  Expanded productHint(int productId, BuildContext context) {
+  Expanded productHint(BuildContext context) {
     return Expanded(
       child: Text(
-        getHint(productId),
-        style: Theme.of(context).textTheme.headline6,
+        'hint',
+        style: Theme.of(context).textTheme.bodySmall,
       ),
     );
   }
 
-  Expanded productRating(int productId) {
+  Expanded productRating() {
     return Expanded(
       child: Column(
         children: [
@@ -258,11 +199,11 @@ class _ProductDetailsState extends State<ProductDetails> {
               scrollDirection: Axis.horizontal,
               shrinkWrap: true,
               itemCount: 5,
-              itemBuilder: (contex, index) {
+              itemBuilder: (context, index) {
                 //here we use for loop to produce filled stars  and border  stars
                 //filled stars for number of rating stars
                 //total stars  are 5 .
-                int nOfStars = getRating(productId);
+                int nOfStars = 3;
                 IconData filledStar = Icons.star;
                 IconData borderStar = Icons.star_border;
                 //max number of rating stars is 5 so we set  max value for i equal 5
@@ -273,10 +214,10 @@ class _ProductDetailsState extends State<ProductDetails> {
               },
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 8.0),
+          const Padding(
+            padding: EdgeInsets.only(bottom: 8.0),
             child: Text(
-              "(${getNumberOfReviews(productId)} Reviews)",
+              "(15 Reviews)",
             ),
           ),
         ],
@@ -285,11 +226,13 @@ class _ProductDetailsState extends State<ProductDetails> {
   }
 
   Expanded productNameWidget(
-      Map<String, Object> routArges, BuildContext context) {
+    BuildContext context, {
+    required String name,
+  }) {
     return Expanded(
       child: Text(
-        routArges['name'] as String,
-        style: Theme.of(context).textTheme.headline5,
+        name,
+        style: Theme.of(context).textTheme.bodyLarge,
       ),
     );
   }

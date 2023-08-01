@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:store_app/view/screens/products/product_details.dart';
 
-class Product extends StatelessWidget {
+class ProductWidget extends StatelessWidget {
   // const Product({Key? key}) : super(key: key);
   final String productName;
   final String hint;
@@ -9,7 +9,7 @@ class Product extends StatelessWidget {
   final String imageUrl;
   final int id;
   // ignore: use_key_in_widget_constructors
-  const Product(
+  const ProductWidget(
       {required this.productName,
       required this.hint,
       required this.price,
@@ -23,7 +23,7 @@ class Product extends StatelessWidget {
 
     return InkWell(
       onTap: (() => Navigator.of(context).pushNamed(
-            ProductDetails.pageRoute,
+            ProductDetailsScreen.pageRoute,
             arguments: {
               'name': productName,
               'image': imageUrl,

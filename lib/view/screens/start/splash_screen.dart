@@ -4,6 +4,7 @@ import 'package:store_app/view/screens/home/products_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
+  static const pageRoute = 'splash_page';
 
   @override
   State<SplashScreen> createState() => _SplashScreenState();

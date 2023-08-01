@@ -1,24 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:store_app/data/product_info.dart';
-import 'package:store_app/data/products_list.dart';
+import 'package:store_app/data/constants/categories.dart';
 import 'package:store_app/view/screens/cart/cart_content.dart';
-import 'package:store_app/view/screens/products/product_details.dart';
 import 'package:store_app/view/widgets/product.dart';
 
-class ProductsScreen extends StatefulWidget {
+class ProductsScreen extends StatelessWidget {
   const ProductsScreen({Key? key}) : super(key: key);
-  static ValueNotifier<int> nOfCartElems = ValueNotifier(0);
-
-  @override
-  State<ProductsScreen> createState() => _ProductsScreenState();
-}
-
-class _ProductsScreenState extends State<ProductsScreen> {
-  int selected = 1;
-  List<ProductInfo> selectedCategory = myProducts.where((element) {
-    String category = element.productInfo['category'] as String;
-    return category.contains('electronic');
-  }).toList();
+  static const pageRoute = 'products_screen';
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +24,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
             children: [
               IconButton(
                 onPressed: () {
-                  Navigator.of(context).pushNamed(Cart.pageRoute);
+                  Navigator.of(context).pushNamed(CartScreen.pageRoute);
                 },
                 icon: const Icon(
                   Icons.shopping_cart,
@@ -50,25 +37,18 @@ class _ProductsScreenState extends State<ProductsScreen> {
               Positioned(
                 top: 0,
                 left: 0,
-                child: ValueListenableBuilder(
-                  valueListenable: ProductsScreen.nOfCartElems,
-                  builder: (context, index, _) => Center(
-                    child: Container(
-                      width: 20,
-                      height: 20,
-                      decoration: BoxDecoration(
-                        color: ProductsScreen.nOfCartElems.value == 0
-                            ? null
-                            : Colors.red,
-                        shape: BoxShape.circle,
+                child: Center(
+                  child: Container(
+                    width: 20,
+                    height: 20,
+                    decoration: const BoxDecoration(
+                      color: Colors.red,
+                      shape: BoxShape.circle,
+                    ),
+                    child: const Center(
+                      child: Text(
+                        '5',
                       ),
-                      child: ProductsScreen.nOfCartElems.value == 0
-                          ? null
-                          : Center(
-                              child: Text(
-                                '${ProductDetails.cartContent.value.length}',
-                              ),
-                            ),
                     ),
                   ),
                 ),
@@ -98,57 +78,13 @@ class _ProductsScreenState extends State<ProductsScreen> {
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Row(
-              children: [
-                categoryFilter(context, 'electronic', 1, () {
-                  setState(() {
-                    selected = 1;
-                    selectedCategory = myProducts.where((element) {
-                      String category =
-                          element.productInfo['category'] as String;
-                      return category.contains('electronic');
-                    }).toList();
-                  });
-                }),
-                categoryFilter(context, 'clothes', 2, () {
-                  setState(() {
-                    selected = 2;
-                    selectedCategory = myProducts.where((element) {
-                      //create a variable to hold the category value to easy acces it
-                      String category =
-                          element.productInfo['category'] as String;
-                      return category.contains('clothes');
-                    }).toList();
-                  });
-                }),
-                categoryFilter(context, 'home', 3, () {
-                  setState(() {
-                    selected = 3;
-                    selectedCategory = myProducts.where((element) {
-                      String category =
-                          element.productInfo['category'] as String;
-                      return category.contains('home');
-                    }).toList();
-                  });
-                }),
-                categoryFilter(context, 'kids', 4, () {
-                  setState(() {
-                    selected = 4;
-                    selectedCategory = [];
-                  });
-                }),
-                categoryFilter(context, 'men', 5, () {
-                  setState(() {
-                    selected = 5;
-                    selectedCategory = [];
-                  });
-                }),
-                categoryFilter(context, 'women', 6, () {
-                  setState(() {
-                    selected = 6;
-                    selectedCategory = [];
-                  });
-                }),
-              ],
+              children: categories.map((category) {
+                return categoryFilter(
+                  context,
+                  categoryName: category.name,
+                  onTap: () {},
+                );
+              }).toList(),
             ),
           ),
           products(context),
@@ -158,13 +94,12 @@ class _ProductsScreenState extends State<ProductsScreen> {
   }
 
   InkWell categoryFilter(
-    BuildContext context,
-    String categoryName,
-    state,
-    function,
-  ) {
+    BuildContext context, {
+    required String categoryName,
+    required void Function()? onTap,
+  }) {
     return InkWell(
-      onTap: function,
+      onTap: onTap,
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 5),
         padding: const EdgeInsets.symmetric(
@@ -178,11 +113,11 @@ class _ProductsScreenState extends State<ProductsScreen> {
             style: BorderStyle.solid,
           ),
           borderRadius: BorderRadius.circular(15),
-          color: state == selected ? null : Colors.white,
+          color: Colors.white,
         ),
         child: Text(
           categoryName,
-          style: Theme.of(context).textTheme.headline5,
+          style: Theme.of(context).textTheme.bodyMedium,
         ),
       ),
     );
@@ -223,39 +158,30 @@ class _ProductsScreenState extends State<ProductsScreen> {
 
   Expanded products(BuildContext context) {
     return Expanded(
-      child: selectedCategory.isEmpty
-          ? Center(
-              child: Text(
-                'not avilable yet',
-                style: Theme.of(context).textTheme.headline4,
-              ),
-            )
-          : GridView.builder(
-              gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                maxCrossAxisExtent: MediaQuery.of(context).size.width / 2,
-                mainAxisExtent: MediaQuery.of(context).size.height / 2,
-                childAspectRatio: 7 / 12,
-                mainAxisSpacing: 20,
-                crossAxisSpacing: 20,
-              ),
-              padding: EdgeInsets.only(
-                top: 20,
-                right: MediaQuery.of(context).size.width * .04,
-                left: MediaQuery.of(context).size.width * .04,
-              ),
-              shrinkWrap: true,
-              scrollDirection: Axis.vertical,
-              itemCount: selectedCategory.length,
-              itemBuilder: (context, index) => Product(
-                productName: selectedCategory[index].productInfo['productName']
-                    as String,
-                hint: selectedCategory[index].productInfo['hint'] as String,
-                price: selectedCategory[index].productInfo['price'] as double,
-                imageUrl:
-                    selectedCategory[index].productInfo['imageUrl'] as String,
-                id: selectedCategory[index].productInfo['id'] as int,
-              ),
-            ),
+      child: GridView.builder(
+        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+          maxCrossAxisExtent: MediaQuery.of(context).size.width / 2,
+          mainAxisExtent: MediaQuery.of(context).size.height / 2,
+          childAspectRatio: 7 / 12,
+          mainAxisSpacing: 20,
+          crossAxisSpacing: 20,
+        ),
+        padding: EdgeInsets.only(
+          top: 20,
+          right: MediaQuery.of(context).size.width * .04,
+          left: MediaQuery.of(context).size.width * .04,
+        ),
+        shrinkWrap: true,
+        scrollDirection: Axis.vertical,
+        itemCount: 10,
+        itemBuilder: (context, index) => const ProductWidget(
+          productName: 'name',
+          hint: 'hint',
+          price: 20,
+          imageUrl: 'url',
+          id: 2,
+        ),
+      ),
     );
   }
 }

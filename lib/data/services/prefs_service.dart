@@ -1,15 +1,18 @@
+import 'dart:developer';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PrefsService {
   static Future<SharedPreferences> _getPrefsInstance() async =>
       await SharedPreferences.getInstance();
-  static newValue({required String key, required dynamic value}) async {
-    final bool result = await _setValue(key: key, value: value);
-    return result;
-  }
-
-  static updateValue({required String key, required dynamic value}) async {
-    final bool result = await _setValue(key: key, value: value);
+  static Future<bool> setValue({
+    required String key,
+    required dynamic value,
+  }) async {
+    final bool result = await _setValue(
+      key: key,
+      value: value,
+    );
     return result;
   }
 
@@ -18,12 +21,12 @@ class PrefsService {
     return await prefs.remove(key);
   }
 
-  Future<bool?> getBool(String key) async {
+ static Future<bool?> getBool(String key) async {
     final prefs = await _getPrefsInstance();
     return prefs.getBool(key);
   }
 
-  Future<String?> getString(String key) async {
+ static Future<String?> getString(String key) async {
     final prefs = await _getPrefsInstance();
     return prefs.getString(key);
   }
@@ -35,6 +38,7 @@ class PrefsService {
     try {
       final prefs = await _getPrefsInstance();
       final Type type = value.runtimeType;
+      log('data type in prefs is : $type');
       switch (type) {
         case int:
           prefs.setInt(key, value);
